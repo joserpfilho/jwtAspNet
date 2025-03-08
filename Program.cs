@@ -31,7 +31,7 @@ var app = builder.Build();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapGet("/", (TokenService service) =>
+app.MapGet("/login", (TokenService service) =>
 {
     var user = new User(
         Id: 1,
@@ -42,7 +42,9 @@ app.MapGet("/", (TokenService service) =>
         Roles: ["admin", "user"]
      );
 
-    service.Create(user);
+    return service.Create(user);
 });
+
+app.MapGet("/restrict", () => "You have Access!").RequireAuthorization();
 
 app.Run();
