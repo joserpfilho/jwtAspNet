@@ -1,5 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
+using jwtAspNet.Models;
 using Microsoft.IdentityModel.Tokens;
 
 namespace jwtAspNet.Services;
@@ -20,10 +22,26 @@ public class TokenService
         {
             SigningCredentials = credentials,
             Expires = DateTime.UtcNow.AddHours(2),
-            
+
         };
 
         var token = handler.CreateToken(tokenDescriptor);
         return handler.WriteToken(token);
+    }
+
+    public ClaimsIdentity GenerateClaims(User user)
+    {
+        var claimsIdentity = new ClaimsIdentity();
+
+        claimsIdentity.AddClaim(new Claim(type: "Id", value: user.Id.ToString()));
+        claimsIdentity.AddClaim(new Claim(type: ClaimTypes.Name, value: user.Email));
+        claimsIdentity.AddClaim(new Claim(type: ClaimTypes.Email, value: user.Email));
+        claimsIdentity.AddClaim(new Claim(type: ClaimTypes.GivenName, value: user.Name));
+        claimsIdentity.AddClaim(new Claim(type: "Image", value: user.Image));
+
+        foreach (var role in user.Roles)
+            claimsIdentity.AddClaim(new Claim(type: ClaimTypes.Role, value: role));
+
+        return claimsIdentity;
     }
 }
