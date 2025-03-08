@@ -25,7 +25,10 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(x =>
+{
+    x.AddPolicy("Admin", p => p.RequireRole("admin"));
+});
 
 var app = builder.Build();
 app.UseAuthentication();
@@ -39,12 +42,14 @@ app.MapGet("/login", (TokenService service) =>
         Email: "john.doe@gmail.com",
         Image: "https://picsum.photos/200",
         Password: "SuperSecure1",
-        Roles: ["admin", "user"]
+        Roles: ["user"]
      );
 
     return service.Create(user);
 });
 
 app.MapGet("/restrict", () => "You have Access!").RequireAuthorization();
+app.MapGet("/admin", () => "Welcome, Admin! You have full access.").RequireAuthorization("Admin");
+
 
 app.Run();
