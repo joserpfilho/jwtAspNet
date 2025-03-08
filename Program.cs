@@ -1,6 +1,8 @@
+using System.Security.Claims;
 using System.Text;
 using jwtAspNet;
 using jwtAspNet.Models;
+using jwtAspNet.obj.Extensions;
 using jwtAspNet.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -48,7 +50,15 @@ app.MapGet("/login", (TokenService service) =>
     return service.Create(user);
 });
 
-app.MapGet("/restrict", () => "You have Access!").RequireAuthorization();
+app.MapGet("/restrict", (ClaimsPrincipal user) => new
+{
+    id = user.Id(),
+    name = user.Name(),
+    email = user.Email(),
+    givenName = user.GivenName(),
+    image = user.Image()
+}).RequireAuthorization();
+
 app.MapGet("/admin", () => "Welcome, Admin! You have full access.").RequireAuthorization("Admin");
 
 
