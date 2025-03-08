@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("jwtAspNet")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+520617141b276ce5555d2a8613f0ed16fc20485f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+02ff3826cf886b85dc7208f7861ea36552812cc1")]
 [assembly: System.Reflection.AssemblyProductAttribute("jwtAspNet")]
 [assembly: System.Reflection.AssemblyTitleAttribute("jwtAspNet")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
